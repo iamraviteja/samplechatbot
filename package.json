@@ -1,0 +1,22 @@
+{
+  "name": "samplechatbot",
+  "version": "1.0.0",
+  "description": "a sample facebook chat bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "chatbot",
+    "facebook",
+    "ai",
+    "sample"
+  ],
+  "author": "Ravi Teja Darapu",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "request": "^2.81.0"
+  }
+}
