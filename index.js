@@ -11,7 +11,7 @@ app.get('/', function(req, res){
     res.send("Application deployed !!!");
 });
 
-app.get('/webhook',function(res, req){
+app.get('/webhook/',function(res, req){
     if(req.query["hub.verify_token"] === "sample_token"){
         console.log("webhook verification success !!");
         res.status(200).send(req.query["hub.challenge"]);
