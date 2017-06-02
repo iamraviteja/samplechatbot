@@ -8,7 +8,7 @@ app.use(parser.json());
 app.listen((process.env.PORT || 5000));
 
 app.get('/', function(req, res){
-    res.send(req.query["hub.challenge"]);
+    res.send("Application deployed !!!");
 });
 
 app.get('/webhook',function(res, req){
