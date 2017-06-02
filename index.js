@@ -12,7 +12,7 @@ app.get('/', function(req, res){
 });
 
 app.get('/webhook/',function(res, req){
-    if(req.query["hub.verify_token"] === "sample_token"){
+    if(req.query["hub.verify_token"] && req.query["hub.verify_token"] === "sample_token"){
         console.log("webhook verification success !!");
         res.status(200).send(req.query["hub.challenge"]);
     }else{
