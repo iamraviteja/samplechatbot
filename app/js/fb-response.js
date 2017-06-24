@@ -1,25 +1,13 @@
-var express = require("express");
+var express = require('express');
+var router = express.Router();
+
 var request = require("request");
-var parser = require("body-parser");
 var token = "EAASq8a5TmXcBALKEzjGSZChpmRtz2YFtSZBHZCLvmney0vSbJczTjNLwfjIvLtzOStxODMK0BhkGRwKBcehnLBdJ3Fu6ahBdOpN2wuoBcKBuqXolXOJekK2b6DthrkFuA6bVsU71ZCt9FW2fr7wIyRRZB3qh0ul9srazhw1IHogZDZD";
-var app = express();
-app.use(parser.urlencoded({extended:false}));
-app.use(parser.json());
-app.listen((process.env.PORT || 5000));
-app.use(express.static(__dirname + '/app'));
+var verify_token = "sample_token";
 
-var fbRouter = require('./app/js/fb-response.js');
-
-// application routes
-app.get('/', function(req, res){
-    res.render("index");
-});
-
-// facebook routes
-app.use('/fbresponse', fbRouter);
 
 app.get('/webhook/',function(req, res){
-    if(req.query["hub.verify_token"] === "sample_token"){
+    if(req.query["hub.verify_token"] === verify_token){
         console.log("webhook verification success !!");
         res.status(200).send(req.query["hub.challenge"]);
     }else{
@@ -60,3 +48,9 @@ function sendText(sender, text){
         }
     });
 }
+
+router.get('/text', function(req, res){
+    res.send('This is text response to fb chatbot');
+});
+
+module.exports = router;
