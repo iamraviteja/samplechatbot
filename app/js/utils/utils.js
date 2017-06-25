@@ -25,16 +25,20 @@ var qbank = [
 ];
 
 utils["getAction"] = function(q){
-    let retAction = qbank.forEach(function(el,index){
-
-        let isMatch = el.question.forEach(function(ques,i){
-            if(ques == q.toLowerCase())  return true;
-            if(i === el.question.length - 1 ) return false;
-        });
+    let retAction;
+    for(let i=0;i<qbank.length; i++){
         
-        if(isMatch) return el.action;
-        if(index === el.length - 1) return 'DEFAULT';
-    });
+        for(letj=0;j<qbank[i].question.length;j++){
+            if(ques == q.toLowerCase()){
+                retAction = qbank[i].action;
+                break;
+            }
+        }
+        
+        if(retAction) break;
+    }
+
+    if(!retAction) return 'DEFAULT';
 
     return retAction;
 }
