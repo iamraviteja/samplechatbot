@@ -40,10 +40,13 @@ router.post('/webhook/', function(req, res){
     for(var i=0; i< messaging_events.length; i++){
         var event = messaging_events[i];
         var sender = event.sender.id;
+
+        console.log(event.message);
         if(event.message && event.message.text){
             let text = event.message.text;
             sendText(sender, "Text echo : "+ text.substring(0, 100));
         }else{
+            console.log('send quick reply');
             sendQuickReplies(sender);
         }
     }
