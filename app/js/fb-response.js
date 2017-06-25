@@ -113,6 +113,18 @@ router.post('/webhook/', function(req, res){
             console.log('send quick reply');
             sendQuickReplies(sender);
         }
+
+        if(event.postback && event.postback.payload){
+            let payload = event.postback.payload;
+            if(resActionHandler[payload]){
+                resActionHandler[payload](sender);
+            }else{
+                sendText(sender, "Text echo : "+ payload);
+            }
+        }else if(event.postback){
+            console.log('send quick reply');
+            sendQuickReplies(sender);
+        }
     }
     res.sendStatus(200);
 });
