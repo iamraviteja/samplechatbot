@@ -23,6 +23,64 @@ var resErrorHandler = function(error, response, body){
     }
 };
 
+var currentTopic;
+var resActionHandler = {
+    GREETING:function(sender){
+        sendButtonTemplate(sender, 'Hi welcome to trivia chatbot. what would you like to do ?',[
+            {
+                type:'postback',
+                title:'Get Questions',
+                payload:'GET_QUESTIONS'
+            },
+            {
+                type:'postback',
+                title:'Set Topic',
+                payload:'CHANGE_TOPIC'
+            }
+        ]);
+    },
+    GET_QUESTIONS:function(sender){
+        sendText(sender, "Text echo : "+sender+" GET_QUESTIONS");
+    },
+    CHANGE_TOPIC:function(sender){
+        let title;
+        if(!currentTopic){
+            title = 'Looks like no topic is set would you like to set a topic';
+        }else{
+            title = 'The current topic set is : '+currentTopic+' would you like to change it';
+        }
+
+        sendButtonTemplate(sender, title,[
+            {
+                type:'postback',
+                title:'Sports',
+                payload:'SET_TOPIC:Sports'
+            },
+            {
+                type:'postback',
+                title:'History',
+                payload:'SET_TOPIC:History'
+            },
+            {
+                type:'postback',
+                title:'Books',
+                payload:'SET_TOPIC:Books'
+            },
+            {
+                type:'postback',
+                title:'Film',
+                payload:'SET_TOPIC:Film'
+            }
+        ]);
+    },
+    REFRESH_TOPIC:function(sender){
+        sendText(sender, "Text echo : REFRESH_TOPIC");
+    },
+    DEFAULT:function(sender){
+        sendQuickReplies(sender);
+    },
+}
+
 
 router.get('/webhook/',function(req, res){
     if(req.query["hub.verify_token"] === verify_token){
@@ -46,7 +104,11 @@ router.post('/webhook/', function(req, res){
         if(event.message && event.message.text){
             let text = event.message.text;
             let resAction = utils.getAction(text);
-            sendText(sender, "Text echo : "+ resAction);
+            if(resActionHandler[resAction]){
+                resActionHandler[resAction](sender);
+            }else{
+                sendText(sender, "Text echo : "+ resAction);
+            }
         }else if (event.message){
             console.log('send quick reply');
             sendQuickReplies(sender);
@@ -66,7 +128,27 @@ function sendText(sender, text){
     }
 
     request(response, resErrorHandler);
-}
+};
+
+function sendButtonTemplate(sender,title, buttons){
+    var messageData = {
+        attachment:{
+            type:'template',
+            payload:{
+                template_type:'button',
+                text:title,
+                buttons:buttons
+            }
+        }
+    };
+
+    var response = utils.clone(resObj);
+    response["json"] = {
+        recipient:{id:sender},
+        message: messageData
+    }
+    request(response, resErrorHandler);
+};
 
 function sendQuickReplies(sender){
     var messageData = {
@@ -74,13 +156,18 @@ function sendQuickReplies(sender){
         quick_replies :[
             {
                 content_type:"text",
-                title:"Get List",
-                payload:"getlistaction"
+                title:"Get Questions",
+                payload:"GET_QUESTIONS"
             },
             {
                 content_type:"text",
-                title:"Get Button",
-                payload:"getbuttonaction"
+                title:"Change Topic",
+                payload:"CHANGE_TOPIC"
+            },
+            {
+                content_type:"text",
+                title:"Refresh Questions",
+                payload:"REFRESH_TOPIC"
             }
         ]
     };
@@ -91,7 +178,7 @@ function sendQuickReplies(sender){
         message: messageData
     }
     request(response, resErrorHandler);
-}
+};
 
 router.get('/text', function(req, res){
     res.send('This is text response to fb chatbot');
