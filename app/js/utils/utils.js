@@ -28,13 +28,13 @@ utils["getAction"] = function(q){
     let retAction;
     for(let i=0;i<qbank.length; i++){
         
-        for(letj=0;j<qbank[i].question.length;j++){
-            if(ques == q.toLowerCase()){
+        for(let j=0;j<qbank[i].question.length;j++){
+            if(qbank[i].question[j] == q.toLowerCase()){
                 retAction = qbank[i].action;
                 break;
             }
         }
-        
+
         if(retAction) break;
     }
 
