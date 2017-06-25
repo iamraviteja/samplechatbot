@@ -45,7 +45,8 @@ router.post('/webhook/', function(req, res){
 
         if(event.message && event.message.text){
             let text = event.message.text;
-            sendText(sender, "Text echo : "+ text.substring(0, 100));
+            let resAction = utils.getAction(text);
+            sendText(sender, "Text echo : "+ resAction);
         }else if (event.message){
             console.log('send quick reply');
             sendQuickReplies(sender);
