@@ -43,6 +43,8 @@ router.post('/webhook/', function(req, res){
         if(event.message && event.message.text){
             let text = event.message.text;
             sendText(sender, "Text echo : "+ text.substring(0, 100));
+        }else{
+            sendQuickReplies(sender);
         }
     }
     res.sendStatus(200);
@@ -59,11 +61,10 @@ function sendText(sender, text){
     }
 
     request(response, resErrorHandler);
-    sendQuickReplies(sender);
 }
 
 function sendQuickReplies(sender){
-    
+
     var messageData = {
         text:"Did you mean",
         quick_replies :[
