@@ -67,7 +67,6 @@ function sendText(sender, text){
 }
 
 function sendQuickReplies(sender){
-
     var messageData = {
         text:"Did you mean",
         quick_replies :[
@@ -89,6 +88,7 @@ function sendQuickReplies(sender){
         recipient:{id:sender},
         message: messageData
     }
+    request(response, resErrorHandler);
 }
 
 router.get('/text', function(req, res){
