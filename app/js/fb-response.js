@@ -47,7 +47,7 @@ router.post('/webhook/', function(req, res){
             sendText(sender, "Text echo : "+ text.substring(0, 100));
         }else{
             console.log('send quick reply');
-            sendQuickReplies(sender);
+            //sendQuickReplies(sender);
         }
     }
     res.sendStatus(200);
