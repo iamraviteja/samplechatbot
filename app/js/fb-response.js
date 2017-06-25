@@ -1,9 +1,27 @@
 var express = require('express');
 var router = express.Router();
 
+var utils = require('./utils/utils.js');
+
 var request = require("request");
 var token = "EAASq8a5TmXcBALKEzjGSZChpmRtz2YFtSZBHZCLvmney0vSbJczTjNLwfjIvLtzOStxODMK0BhkGRwKBcehnLBdJ3Fu6ahBdOpN2wuoBcKBuqXolXOJekK2b6DthrkFuA6bVsU71ZCt9FW2fr7wIyRRZB3qh0ul9srazhw1IHogZDZD";
 var verify_token = "sample_token";
+
+// chatbot response object
+var resObj = {
+    url:"https://graph.facebook.com/v2.6/me/messages",
+    qs:{access_token: token},
+    method: "POST"
+};
+
+// response error handler
+var resErrorHandler = function(error, response, body){
+    if(error){
+        console.log("Sending Error: ", error);
+    }else if(response.body.error){
+        console.log("Response Body Error:", response.body.error);
+    }
+};
 
 
 router.get('/webhook/',function(req, res){
@@ -31,22 +49,26 @@ router.post('/webhook/', function(req, res){
 });
 
 function sendText(sender, text){
+
     var messageData = {text : text};
-    request({
-        url:"https://graph.facebook.com/v2.6/me/messages",
-        qs:{access_token: token},
-        method: "POST",
-        json:{
-            recipient:{id:sender},
-            message:messageData
-        }
-    }, function(error, response, body){
-        if(error){
-            console.log("Sending Error: ",error);
-        }else if (response.body.error){
-            console.log("response body error: ",response.body.error);
-        }
-    });
+    
+    var response = utils.clone(resObj);
+    response["json"] = {
+        recipient:{id:sender},
+        message:messageData
+    }
+
+    // {
+    //     url:"https://graph.facebook.com/v2.6/me/messages",
+    //     qs:{access_token: token},
+    //     method: "POST",
+    //     json:{
+    //         recipient:{id:sender},
+    //         message:messageData
+    //     }
+    // }
+
+    request(response, resErrorHandler);
 }
 
 router.get('/text', function(req, res){
