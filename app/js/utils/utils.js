@@ -20,7 +20,7 @@ utils["clone"] = function(obj){
     if( null == obj || 'object' != typeof obj) return obj;
 
     // handle object
-    if(obj instanceof object) return utils.cloneObj(obj);
+    if(obj instanceof Object) return utils.cloneObj(obj);
 
     // unsupported type
     throw new Error("Unable to Clone : unsuported type");
