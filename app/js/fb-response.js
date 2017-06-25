@@ -51,24 +51,40 @@ router.post('/webhook/', function(req, res){
 function sendText(sender, text){
 
     var messageData = {text : text};
-    
+
     var response = utils.clone(resObj);
     response["json"] = {
         recipient:{id:sender},
         message:messageData
     }
 
-    // {
-    //     url:"https://graph.facebook.com/v2.6/me/messages",
-    //     qs:{access_token: token},
-    //     method: "POST",
-    //     json:{
-    //         recipient:{id:sender},
-    //         message:messageData
-    //     }
-    // }
-
     request(response, resErrorHandler);
+    sendQuickReplies(sender);
+}
+
+function sendQuickReplies(sender){
+    
+    var messageData = {
+        text:"Did you mean",
+        quick_replies :[
+            {
+                content_type:"text",
+                title:"Get List",
+                payload:"getlistaction"
+            },
+            {
+                content_type:"text",
+                title:"Get Button",
+                payload:"getbuttonaction"
+            }
+        ]
+    };
+
+    var response = utils.clone(resObj);
+    response["json"] = {
+        recipient:{id:sender},
+        message: messageData
+    }
 }
 
 router.get('/text', function(req, res){
