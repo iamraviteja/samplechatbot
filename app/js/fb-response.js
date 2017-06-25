@@ -58,11 +58,6 @@ var resActionHandler = {
             },
             {
                 type:'postback',
-                title:'History',
-                payload:'SET_TOPIC:History'
-            },
-            {
-                type:'postback',
                 title:'Books',
                 payload:'SET_TOPIC:Books'
             },
