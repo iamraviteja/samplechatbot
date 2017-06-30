@@ -77,6 +77,8 @@ var resActionHandler = {
 };
 
 router.use(function(req, res, next){
+    console.log(req);
+    console.log(req.params);
     if(req.params[appId] && req.params[appId] == "FirstApp"){
         req.params[verify_token] = "sample_token";
     }else{
