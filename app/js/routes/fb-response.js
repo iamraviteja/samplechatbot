@@ -74,11 +74,21 @@ var resActionHandler = {
     DEFAULT:function(sender){
         sendQuickReplies(sender);
     },
-}
+};
+
+router.use(function(req, res, next){
+    if(req.params[appId] && req.params[appId] == "FirstApp"){
+        req.params[verify_token] = "sample_token";
+    }else{
+        req.params[verify_token] = "dummy";
+    }
+    next();
+});
 
 
 router.get('/webhook/',function(req, res){
-    if(req.query["hub.verify_token"] === verify_token){
+    console.log(req.params[appId] +" ***** "+ req.params[verify_token]);
+    if(req.query["hub.verify_token"] === req.params[verify_token]){
         console.log("webhook verification success !!");
         res.status(200).send(req.query["hub.challenge"]);
     }else{

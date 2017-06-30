@@ -15,4 +15,4 @@ app.get('/', function(req, res){
 });
 
 // facebook routes
-app.use('/fbresponse', fbRouter);
+app.use('/fbresponse/:appId', fbRouter);
