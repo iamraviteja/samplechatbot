@@ -1,5 +1,5 @@
 var express = require('express');
-var router = express.Router();
+var router = express.Router({mergeParams:true});
 
 var utils = require('../utils/utils.js');
 
@@ -76,21 +76,22 @@ var resActionHandler = {
     },
 };
 
-router.use(function(req, res, next){
-    console.log(req);
-    console.log(req.params);
-    if(req.params[appId] && req.params[appId] == "FirstApp"){
-        req.params[verify_token] = "sample_token";
+router.param('appid',function(req, res, next){
+    console.log(req.params['appid']);
+    if(req.params['appid'] && req.params['appid'] == "FirstApp"){
+        req.params['verify_token'] = "sample_token";
     }else{
-        req.params[verify_token] = "dummy";
+        console.log('failed....');
+        req.params['verify_token'] = "dummy";
     }
     next();
 });
 
 
-router.get('/webhook/',function(req, res){
-    console.log(req.params[appId] +" ***** "+ req.params[verify_token]);
-    if(req.query["hub.verify_token"] === req.params[verify_token]){
+router.get('/:appid/webhook/',function(req, res){
+    console.log(req.params);
+    console.log(req.params['appid'] +" ***** "+ req.params['verify_token']);
+    if(req.query["hub.verify_token"] === req.params['verify_token']){
         console.log("webhook verification success !!");
         res.status(200).send(req.query["hub.challenge"]);
     }else{
@@ -99,7 +100,7 @@ router.get('/webhook/',function(req, res){
     }
 });
 
-router.post('/webhook/', function(req, res){
+router.post('/:appid/webhook/', function(req, res){
     var messaging_events = req.body.entry[0].messaging;
 
     for(var i=0; i< messaging_events.length; i++){
