@@ -11,7 +11,7 @@
             <div class="container">
                 <div class="grid grid--center">
                     <div class="grid__column">
-                        <h3 class="title">Messenger Bot</h3>
+                        <h3 class="title">Messenger Bot Manager</h3>
                     </div>
                 </div>
             </div>
@@ -21,11 +21,64 @@
                 <div class="grid">
                     <div class="main-content grid__column grid__column--12 grid__column--9--md flex-first flex-last--md">
                         <div class="title-set">
-                            <h1 class="title">Application Deployed</h1>
+                            <h2 class="title">Welcome to Messenger Bot Manager</h2>
                             <p class="lead">
                                 Application is deployed and running successfully. Please check the navigation links for further actions.
                             </p>
                             <hr>
+                        </div>
+                        <div>
+                            <h2>Create Application</h2>
+                            <p>
+                                Create new bot applications by following the instructons below.
+                                <div class="color-primary">
+                                    Please make sure that you have created your facebook page and generated your access token for your messenger bot.Dont know how checkout this link?
+                                </div> 
+                            </p>
+                            <form>
+                                <div class="grid">
+                                    <div class="grid__column grid__column--12">
+                                        <div class="control control--block">
+                                            <label for="appid" class="control__label">
+                                                Step 1: Create your application name
+                                            </label>
+                                            <span class="type-small">(Application name must be unique)</span>
+                                            <input type="text" class="control__input" id="appid" placeholder="Application Name" />
+                                        </div>
+                                    </div>
+                                    <div class="grid__column grid__column--12">
+                                        <div class="control control--block">
+                                            <label for="apptoken" class="control__label">
+                                                Step 2: Enter the page access token
+                                            </label>
+                                            <span class="type-small">(Copy and paste the application token from facebook)</span>
+                                            <input type="text" class="control__input" id="apptoken" placeholder="Application Token" />
+                                        </div>
+                                    </div>
+                                    <div class="grid__column grid__column--12">
+                                        <div class="control control--block">
+                                            <label for="vtoken" class="control__label">
+                                                Step 3: Enter the verification token
+                                            </label>
+                                            <span class="type-small">(Please use the same verification token when using your webhook url)</span>
+                                            <input type="text" class="control__input" id="vtoken" placeholder="Verification Token" />
+                                        </div>
+                                    </div>
+                                    <div class="grid__column grid__column--12">
+                                        <div class="control control--block">
+                                            <label for="appdescription" class="control__label">
+                                                Step 4: Enter the description for your application <span class="type-small color-primary">Optional</span>
+                                            </label>
+                                            <textarea class="control__textarea control__textarea--md" placeholder="Type your description here..." id="appdescription"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="grid__column">
+                                        <div class="control control--block">
+                                            <input class="control__button button button--filled button--primary" type="submit" value="Generate webhook URL">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                     <nav class="sidebar grid__column grid__column--12 grid__column--3--md flex-last flex-first--md">
@@ -33,10 +86,10 @@
                             <h5 class="title">Actions</h5>
                             <ul class="list list--unstyled list--nulled">
                                 <li class="list__item">
-                                    <a href="#">Check conditions</a>
+                                    <a href="#">Create Application</a>
                                 </li>
                                 <li class="list__item">
-                                    <a href="#">Write new condition</a>
+                                    <a href="#">Manage Application</a>
                                 </li>
                             </ul>
                         </div>

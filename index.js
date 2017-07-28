@@ -11,7 +11,7 @@ var fbRouter = require('./app/js/routes/fb-response.js');
 
 // application routes
 app.get('/', function(req, res){
-    res.render("index");
+    res.render("index.html");
 });
 
 // facebook routes

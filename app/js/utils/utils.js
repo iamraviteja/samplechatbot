@@ -1,6 +1,7 @@
 // contains the utility function of the application
 /*
 1) clone object function
+Reference : https://stackoverflow.com/questions/728360/how-do-i-correctly-clone-a-javascript-object
 */
 
 var utils = {};
