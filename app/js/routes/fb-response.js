@@ -14,7 +14,7 @@ var resObj = {
     method: "POST"
 };
 
-// response error handler
+// response error handler : just added
 var resErrorHandler = function(error, response, body){
     if(error){
         console.log("Sending Error: ", error);
